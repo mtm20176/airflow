@@ -46,17 +46,17 @@ def task_merge():
 
 t1 = PythonOperator(
     task_id='read_json_2021',
-    python_callable=task_read_la_911_2021_data(),
+    python_callable=task_read_la_911_2021_data,
     dag=dag)
 
 t2 = PythonOperator(
     task_id='read_json_2020',
-    python_callable=task_read_la_911_2020_data(),
+    python_callable=task_read_la_911_2020_data,
     dag=dag)
 
 t3 = PythonOperator(
     task_id='merge',
-    python_callable=task_merge(),
+    python_callable=task_merge,
     dag=dag)
 
 t3.set_upstream(t1)
