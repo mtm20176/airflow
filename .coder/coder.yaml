@@ -48,7 +48,24 @@ workspace:
               mkdir -p $DAGS_PATH
               cp $REPO_1_PATH/dags/helloworld.py $DAGS_PATH
               cp $REPO_1_PATH/dags/datatest.py $DAGS_PATH
-            fi                
+            fi 
+        - name: clone pandas repo
+          continue-on-error: true
+          directory: /home/coder/
+          shell: /bin/bash
+          command: |
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+            REPO_1_PATH=$HOME/pandas_automl 
+            if [ -d $REPO_1_PATH ]; then
+              echo 'datasets and pandas jupyter notebook repo already exists - skip clone'
+            else
+              git clone git@github.com:mtm20176/pandas_automl.git 
+            fi  
+        - name: install 1 vscode Python extension (vsix) from open vsx
+          continue-on-error: true
+          directory: /home/coder/
+          shell: /bin/bash
+          command: SERVICE_URL=https://open-vsx.org/vscode/gallery ITEM_URL=https://open-vsx.org/vscode/item /var/tmp/coder/code-server/bin/code-server --install-extension ms-python.python                                      
         - name: "install vim editor"
           directory: /home/coder/
           shell: /bin/bash
