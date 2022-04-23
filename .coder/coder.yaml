@@ -1,0 +1,64 @@
+version: 0.2
+workspace:
+  type: kubernetes
+  specs:
+    kubernetes:
+      image:
+        value: index.docker.io/marktmilligan/airflow:dev-url
+      container-based-vm:
+        value: false
+      cpu: 
+        value: 4
+      memory:
+        value: 4 
+      disk:
+        value: 10
+      gpu-count:
+        value: 0
+      labels:
+        value:
+          com.coder.custom.chargeback: "team_airflow"
+  configure:
+    start:
+      value:
+        - name: "set ssh keys"
+          command: |
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+        - name: "clone airflow project"
+          command: |
+            REPO_1_PATH=$HOME/airflow_wac
+            if [ -d $REPO_1_PATH ]; then
+              echo 'airflow repo already exists - skip clone, do fetch and reset'
+              cd $REPO_1_PATH
+              git fetch --all
+              git reset --hard origin/main
+            else
+              echo 'airflow repo DOES NOT exists, git clone'
+              git clone git@github.com:mtm20176/airflow_wac.git 
+              cd $REPO_1_PATH
+            fi    
+        - name: "move DAGS to ~/airflow/dags"
+          command: |
+            DAGS_PATH=$HOME/airflow/dags
+            if [ -d $DAGS_PATH ]; then
+              echo 'DAGS folder already exists - skip move'
+            else
+              echo 'dags folder DOES NOT exists, copy DAG examples'
+              cp $REPO_1_PATH/dags/helloworld.py $HOME/airflow/dags
+              cp $REPO_1_PATH/dags/datatest.py $HOME/airflow/dags
+            fi                
+        - name: "install vim editor"
+          directory: /home/coder/
+          shell: /bin/bash
+          command: |
+            continue-on-error: true
+            if [ -f "/etc/arch-release" ]; then
+              echo "Arch Linux"
+              sudo pacman -S vim --noconfirm
+              echo 'installed vim'
+            elif [ -f "/etc/lsb-release" ]; then
+              echo "Ubuntu" 
+              sudo apt update
+              sudo apt install vim
+              echo 'installed vim'
+            fi
