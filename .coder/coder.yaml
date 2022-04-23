@@ -39,6 +39,7 @@ workspace:
             fi    
         - name: "move DAGS to ~/airflow/dags"
           command: |
+            REPO_1_PATH=$HOME/airflow_wac
             DAGS_PATH=$HOME/airflow/dags
             if [ -d $DAGS_PATH ]; then
               echo 'DAGS folder already exists - skip move'
