@@ -45,7 +45,7 @@ workspace:
               echo 'DAGS folder already exists - skip move'
             else
               echo 'dags folder DOES NOT exists, copy DAG examples'
-              mkdir $DAGS_PATH
+              mkdir -p $DAGS_PATH
               cp $REPO_1_PATH/dags/helloworld.py $DAGS_PATH
               cp $REPO_1_PATH/dags/datatest.py $DAGS_PATH
             fi                
