@@ -1,6 +1,7 @@
 import airflow
 from airflow import DAG
 from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
@@ -43,22 +44,19 @@ def task_merge():
    m.to_csv('/home/coder/la_911_2021_2020_calltypes.csv')
 
 
-t1 = BashOperator(
+t1 = PythonOperator(
     task_id='read_json_2021',
     python_callable=task_read_la_911_2021_data(),
-    bash_command='python3 ~/airflow/dags/datatest.py',
     dag=dag)
 
-t2 = BashOperator(
+t2 = PythonOperator(
     task_id='read_json_2020',
     python_callable=task_read_la_911_2020_data(),
-    bash_command='python3 ~/airflow/dags/datatest.py',
     dag=dag)
 
-t3 = BashOperator(
+t3 = PythonOperator(
     task_id='merge',
     python_callable=task_merge(),
-    bash_command='python3 ~/airflow/dags/datatest.py',
     dag=dag)
 
 t3.set_upstream(t1)
