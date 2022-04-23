@@ -24,25 +24,25 @@ def task_read13():
   print("hello from task13 read data")
   #query="https://data.colorado.gov/resource/tv8u-hswn.json"
   data_2013=pd.read_json("https://data.policefoundation.org/resource/jhvd-4583.json")
-  data_2013.to_csv('/home/manasi/outputcsv/data_2013.csv')
+  data_2013.to_csv('/home/coder/data_2013.csv')
 
 def task_read12():
   print("hello from task12 read data")
   #query="https://data.colorado.gov/resource/tv8u-hswn.json"
   data_2012=pd.read_json("https://data.policefoundation.org/resource/fgcx-vmf9.json")
-  data_2012.to_csv('/home/manasi/outputcsv/data_2012.csv')
+  data_2012.to_csv('/home/coder/data_2012.csv')
 
  
 def task_merge():
    print("tasks 2012")
-   data_2012=pd.read_csv('/home/manasi/outputcsv/data_2012.csv')
+   data_2012=pd.read_csv('/home/coder/data_2012.csv')
    year2012=data_2012['ward'].value_counts(sort=True, ascending=True).to_frame() #2012 arrests by ward
    print("tasks 2013")
-   data_2013=pd.read_csv('/home/manasi/outputcsv/data_2012.csv')
+   data_2013=pd.read_csv('/home/coder/data_2012.csv')
    year2013=data_2013['ward'].value_counts(sort=True, ascending=True).to_frame() #2013 arrests by ward
    m=pd.concat([year2012,year2013],axis=1)
    m.columns=['year2012','year2013']
-   m.to_csv('/home/manasi/outputcsv/merge/mdata.csv')
+   m.to_csv('/home/coder/mdata.csv')
 
 
 t1 = BashOperator(
