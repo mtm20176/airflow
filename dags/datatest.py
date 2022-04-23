@@ -36,9 +36,11 @@ def task_merge():
    print("2021 911 call types")
    data_2021=pd.read_csv('/home/coder/la_911_2021_data.csv')
    calltype_2021=data_2021['call_type_text'].value_counts(sort=True, ascending=True).to_frame()
+   calltype_2021.to_csv('/home/coder/la_911_2021_calltypes.csv')
    print("2020 911 call types")
    data_2020=pd.read_csv('/home/coder/la_911_2020_data.csv')
    calltype_2020=data_2021['call_type_text'].value_counts(sort=True, ascending=True).to_frame()
+   calltype_2020.to_csv('/home/coder/la_911_2020_calltypes.csv')
    m=pd.concat([calltype_2021,calltype_2020],axis=1)
    m.columns=['year2021','year2020']
    m.to_csv('/home/coder/la_911_2021_2020_calltypes.csv')
