@@ -45,8 +45,9 @@ workspace:
               echo 'DAGS folder already exists - skip move'
             else
               echo 'dags folder DOES NOT exists, copy DAG examples'
-              cp $REPO_1_PATH/dags/helloworld.py $HOME/airflow/dags
-              cp $REPO_1_PATH/dags/datatest.py $HOME/airflow/dags
+              mkdir $DAGS_PATH
+              cp $REPO_1_PATH/dags/helloworld.py $DAGS_PATH
+              cp $REPO_1_PATH/dags/datatest.py $DAGS_PATH
             fi                
         - name: "install vim editor"
           directory: /home/coder/
