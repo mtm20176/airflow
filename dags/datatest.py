@@ -23,24 +23,24 @@ dag = DAG('datafile', default_args=default_args)
 def task_read_la_911_2021_data():
   print("reading data from Los Angeles 911 activity")
   la_911_data=pd.read_json("https://data.lacity.org/resource/cibt-wiru.json")
-  la_911_data.to_csv("$HOME/airflow/sets/la_911_2021_data.csv")
+  la_911_data.to_csv("$HOME/la_911_2021_data.csv")
 
 def task_read_la_911_2020_data():
   print("reading data from Los Angeles 911 activity")
   la_911_data=pd.read_json("https://data.lacity.org/resource/84iq-i2r6.json")
-  la_911_data.to_csv("$HOME/airflow/sets/la_911_2020_data.csv")
+  la_911_data.to_csv("$HOME/la_911_2020_data.csv")
 
  
 def task_merge():
    print("2021 911 call types")
-   data_2021=pd.read_csv('$HOME/airflow/sets/la_911_2021_data.csv')
+   data_2021=pd.read_csv('$HOME/la_911_2021_data.csv')
    calltype_2021=data_2021['call_type_text'].value_counts(sort=True, ascending=True).to_frame()
    print("2020 911 call types")
-   data_2020=pd.read_csv('$HOME/airflow/sets/la_911_2020_data.csv')
+   data_2020=pd.read_csv('$HOME/la_911_2020_data.csv')
    calltype_2020=data_2021['call_type_text'].value_counts(sort=True, ascending=True).to_frame()
    m=pd.concat([calltype_2021,calltype_2020],axis=1)
    m.columns=['year2021','year2020']
-   m.to_csv('$HOME/airflow/sets/la_911_2021_2020_calltypes.csv')
+   m.to_csv('$HOME/la_911_2021_2020_calltypes.csv')
 
 
 t1 = BashOperator(
