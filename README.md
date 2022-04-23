@@ -1,4 +1,4 @@
-# team-env
+# Airflow
 
 An example Airflow repo
 
