@@ -8,9 +8,9 @@ workspace:
       container-based-vm:
         value: false
       cpu: 
-        value: 4
+        value: 2
       memory:
-        value: 4 
+        value: 2 
       disk:
         value: 10
       gpu-count:
